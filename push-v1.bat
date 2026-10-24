@@ -41,6 +41,20 @@ git commit -m "%msg%"
 if errorlevel 1 echo  (Nothing new to commit - pushing anyway.)
 
 echo.
+echo  Syncing with GitHub first (your local files win if anything differs)...
+git fetch origin main >nul 2>nul
+git rev-parse --verify origin/main >nul 2>nul
+if not errorlevel 1 (
+  git merge origin/main --allow-unrelated-histories -X ours --no-edit -m "Merge GitHub changes" >nul 2>nul
+  if errorlevel 1 (
+    git merge --abort >nul 2>nul
+    echo  Could not merge automatically. Ask Claude for help with the message above.
+    pause
+    exit /b 1
+  )
+)
+
+echo.
 echo  Pushing to GitHub... a browser login window may open the first time.
 git push -u origin main
 if errorlevel 1 (
