@@ -25,7 +25,7 @@ export default function Logo({ light = false }: { light?: boolean }) {
     <span className={`logo logo-v5${light ? " is-light" : ""}`}>
       <LogoMark />
       <span className="logo-text">
-        <span className="logo-word">Cubtix</span>
+        <span className="logo-word" aria-label="Cubtix">Cub<b>tix</b></span>
         <span className="logo-sub">Little Things, Big Happiness!</span>
       </span>
     </span>

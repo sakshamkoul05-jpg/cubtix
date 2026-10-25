@@ -19,7 +19,7 @@ export default function HomeSearch() {
     >
       <Search size={20} />
       <label htmlFor="h7q" className="sr-only">Search products</label>
-      <input id="h7q" type="search" placeholder="Search teddies, Hot Wheels, keychains, diaries…" value={q} onChange={(e) => setQ(e.target.value)} />
+      <input id="h7q" type="search" placeholder="Search products…" value={q} onChange={(e) => setQ(e.target.value)} />
       <button type="submit">Search</button>
     </form>
   );
