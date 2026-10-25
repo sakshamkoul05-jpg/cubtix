@@ -3950,3 +3950,90 @@ body { background: #fff; }
   .hs-kicker { font-size: 11px; }
   .announce-phone { padding: 0 12px; font-size: 12px; }
 }
+
+/* =====================================================================
+   v6.1 — GIFT UNBOXING, CONFETTI, SPARKLES
+   ===================================================================== */
+.gu { --s: clamp(160px, 20vw, 250px); --L: calc(var(--s) * 0.24); --W: calc(var(--s) * 1.1);
+  position: relative; height: 100vh; min-height: 620px; overflow: hidden; color: #fff;
+  background: radial-gradient(80% 70% at 50% 55%, #2a1f0a 0%, #111113 60%, #0a0a0b 100%); }
+.gu-intro, .gu-outro { position: absolute; left: 0; right: 0; z-index: 5; text-align: center; padding: 0 20px; pointer-events: none; }
+.gu-intro { top: 9vh; }
+.gu-outro { bottom: 7vh; transform: translateY(40px); display: grid; justify-items: center; gap: 18px; pointer-events: auto; }
+.gu-kicker { font-size: 12px; font-weight: 700; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold-soft); }
+.gu-kicker::after { content: " ↓"; display: inline-block; animation: nudge 1.4s ease-in-out infinite; }
+@keyframes nudge { 50% { transform: translateY(5px); } }
+.gu-title { font-size: clamp(30px, 4.2vw, 58px); font-weight: 800; letter-spacing: -0.04em; line-height: 1.05; margin-top: 8px; }
+.gu-title span { color: var(--gold); }
+.gu-stage { position: absolute; inset: 0; display: grid; place-items: center; }
+.gu-rays { position: absolute; width: 170vmax; height: 170vmax; left: 50%; top: 50%; margin: -85vmax 0 0 -85vmax;
+  background: repeating-conic-gradient(from 0deg, rgba(232, 185, 49, 0.16) 0deg 6deg, transparent 6deg 18deg);
+  mask-image: radial-gradient(circle, #000 0%, transparent 55%); -webkit-mask-image: radial-gradient(circle, #000 0%, transparent 55%); }
+.gu-glow { position: absolute; width: calc(var(--s) * 2.2); aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(255, 214, 110, 0.75), rgba(232, 185, 49, 0.25) 40%, transparent 70%); filter: blur(10px); }
+.gu-scene { position: relative; perspective: 1100px; width: var(--s); height: var(--s); margin-top: calc(var(--s) * 0.25); z-index: 2; }
+.gu-box { position: absolute; inset: 0; transform-style: preserve-3d; transform: rotateX(-22deg) rotateY(-32deg); }
+.gu-face { position: absolute; inset: 0; backface-visibility: visible;
+  background:
+    linear-gradient(90deg, transparent 43%, #f6d36b 43%, #e8b931 50%, #c9971f 57%, transparent 57%),
+    linear-gradient(160deg, #ff3b5c 0%, #d0102f 55%, #a30b25 100%);
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.25); }
+.gu-front { transform: translateZ(calc(var(--s) / 2)); }
+.gu-back { transform: rotateY(180deg) translateZ(calc(var(--s) / 2)); }
+.gu-right { transform: rotateY(90deg) translateZ(calc(var(--s) / 2)); filter: brightness(0.82); }
+.gu-left { transform: rotateY(-90deg) translateZ(calc(var(--s) / 2)); filter: brightness(0.82); }
+.gu-bottom { transform: rotateX(-90deg) translateZ(calc(var(--s) / 2)); filter: brightness(0.5); }
+.gu-inside { position: absolute; inset: 0; transform: rotateX(90deg) translateZ(calc(var(--s) / 2 - 2px)); background: radial-gradient(circle, #3b0612, #12020a 75%); }
+.gu-lid { position: absolute; left: 50%; top: 0; width: 0; height: 0; transform-style: preserve-3d; }
+.gu-lf { position: absolute; left: calc(var(--W) / -2); width: var(--W); top: calc(var(--L) * -0.7); height: var(--L);
+  background:
+    linear-gradient(90deg, transparent 43%, #f6d36b 43%, #e8b931 50%, #c9971f 57%, transparent 57%),
+    linear-gradient(180deg, #ff4d6b, #c40d2c); box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35); }
+.gu-lfront { transform: translateZ(calc(var(--W) / 2)); }
+.gu-lback { transform: rotateY(180deg) translateZ(calc(var(--W) / 2)); }
+.gu-lright { transform: rotateY(90deg) translateZ(calc(var(--W) / 2)); filter: brightness(0.82); }
+.gu-lleft { transform: rotateY(-90deg) translateZ(calc(var(--W) / 2)); filter: brightness(0.82); }
+.gu-ltop { top: calc(var(--W) / -2 - var(--L) * 0.7); height: var(--W); transform: translateY(calc(var(--W) / 2)) rotateX(90deg);
+  background:
+    linear-gradient(90deg, transparent 43%, #f6d36b 43%, #e8b931 50%, #c9971f 57%, transparent 57%),
+    linear-gradient(0deg, transparent 43%, #f6d36b 43%, #e8b931 50%, #c9971f 57%, transparent 57%),
+    linear-gradient(135deg, #ff5a76, #d0102f); }
+.gu-bow { position: absolute; left: 0; top: calc(var(--L) * -0.7); width: 0; height: 0; transform: translateY(-2px); }
+.gu-loop { position: absolute; width: calc(var(--s) * 0.34); height: calc(var(--s) * 0.22); bottom: 0; border: calc(var(--s) * 0.05) solid #e8b931; border-radius: 50%; background: rgba(246, 211, 107, 0.15); box-shadow: inset 0 0 0 2px #fff2c2; }
+.gu-loop-l { right: -2px; transform-origin: 100% 100%; transform: rotate(-28deg); }
+.gu-loop-r { left: -2px; transform-origin: 0 100%; transform: rotate(28deg); }
+.gu-knot { position: absolute; width: calc(var(--s) * 0.1); height: calc(var(--s) * 0.1); left: calc(var(--s) * -0.05); bottom: calc(var(--s) * -0.03); border-radius: 30%; background: #f6d36b; box-shadow: 0 0 0 3px #c9971f; }
+.gu-card { position: absolute; left: 50%; top: 50%; z-index: 3; width: clamp(92px, 10vw, 140px); margin-left: calc(clamp(92px, 10vw, 140px) / -2); margin-top: -70px;
+  background: #fff; border-radius: 16px; padding: 7px 7px 0; text-decoration: none; color: var(--ink); box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.6); will-change: transform; }
+.gu-card img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 10px; }
+.gu-card span { display: block; padding: 7px 2px 9px; font-size: 13px; font-weight: 700; text-align: center; }
+.gu-card:hover { box-shadow: 0 0 0 3px var(--gold), 0 24px 50px -10px rgba(232, 185, 49, 0.5); }
+@media (max-width: 700px) {
+  .gu { --s: 150px; min-height: 560px; }
+  .gu-card { width: 82px; margin-left: -41px; margin-top: -50px; padding: 5px 5px 0; border-radius: 12px; }
+  .gu-card span { font-size: 10.5px; padding: 5px 1px 6px; }
+  .gu-intro { top: 7vh; }
+}
+
+.confetti { position: fixed; z-index: 9900; pointer-events: none; margin: -4px 0 0 -4px; }
+.sparkle { position: fixed; z-index: 9900; pointer-events: none; margin: -8px 0 0 -6px; line-height: 1; text-shadow: 0 0 8px currentColor; }
+.gu-outro { z-index: 6; } .gu-outro .gu-title { text-shadow: 0 4px 30px rgba(0,0,0,.6); }
+@media (max-width: 700px) { .gu-card { width: 70px; margin-left: -35px; margin-top: -44px; } .gu-card span { font-size: 9.5px; } }
+
+/* =====================================================================
+   v6.2 — PERFORMANCE
+   ===================================================================== */
+.grain { display: none; }
+.header, .header.is-scrolled { backdrop-filter: none; -webkit-backdrop-filter: none; }
+.si { will-change: auto; }
+html.motion-on .pcard, html.motion-on .ccard { will-change: auto; }
+.mq-track, .hd-track { will-change: auto; }
+.hs-arrows button { backdrop-filter: none; }
+/* lighter light-rays: smaller, no mask */
+.gu-rays { width: 120vmax; height: 120vmax; margin: -60vmax 0 0 -60vmax; -webkit-mask-image: none; mask-image: none;
+  background: repeating-conic-gradient(from 0deg, rgba(232, 185, 49, 0.12) 0deg 6deg, transparent 6deg 18deg); border-radius: 50%; }
+.gu::after { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 1; background: radial-gradient(60% 60% at 50% 55%, transparent 30%, #0b0b0c 75%); }
+.gu-stage, .gu-intro, .gu-outro { z-index: 2; }
+.gu-intro, .gu-outro { z-index: 5; }
+.gu-glow { filter: none; }
+html { scroll-behavior: auto; }
+.hs-black .hs-accent { animation: none; background-position: 0 0; }

@@ -59,7 +59,9 @@ export default function ToyBox() {
       });
     };
 
+    let visible = true;
     const step = (now: number) => {
+      if (!visible) { raf = 0; return; }
       const dt = Math.min(2, (now - t0) / 16.7);
       t0 = now;
       for (const b of bodies) {
@@ -182,6 +184,11 @@ export default function ToyBox() {
       });
     });
 
+    const vis = new IntersectionObserver(([e]) => {
+      visible = e.isIntersecting;
+      if (visible && !raf) { t0 = performance.now(); raf = requestAnimationFrame(step); }
+    });
+    vis.observe(root);
     const ro = new ResizeObserver(() => layout(false));
     ro.observe(root);
 
@@ -199,6 +206,7 @@ export default function ToyBox() {
       cancelAnimationFrame(raf);
       mo?.disconnect();
       ro.disconnect();
+      vis.disconnect();
       btn?.removeEventListener("click", shake);
       cleanups.forEach((f) => f());
       gsap.killTweensOf(bodies);

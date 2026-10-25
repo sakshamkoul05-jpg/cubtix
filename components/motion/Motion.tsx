@@ -4,13 +4,12 @@ import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Lenis from "lenis";
 
 gsap.registerPlugin(ScrollTrigger);
 
 declare global {
   interface Window {
-    __lenis?: Lenis;
+    __lenis?: { scrollTo: (y: number, o?: object) => void; velocity: number };
   }
 }
 
@@ -23,32 +22,33 @@ const finePointer = () => typeof window !== "undefined" && window.matchMedia("(h
 export function SmoothScroll() {
   const pathname = usePathname();
 
+  // Native scrolling (smooth-scroll library removed for performance). We still publish a
+  // smoothed scroll velocity for the marquee.
   useEffect(() => {
-    if (reduced()) return;
-    const lenis = new Lenis({ duration: 1.15, easing: (t) => 1 - Math.pow(1 - t, 4), touchMultiplier: 1.4 });
-    window.__lenis = lenis;
-    lenis.on("scroll", (e: Lenis) => {
-      ScrollTrigger.update();
-      document.documentElement.style.setProperty("--vel", String(Math.max(-40, Math.min(40, e.velocity))));
-    });
-    const tick = (t: number) => lenis.raf(t * 1000);
-    gsap.ticker.add(tick);
-    gsap.ticker.lagSmoothing(0);
-
-    // Drawers / mobile menu lock the body — pause smooth scroll with them.
-    const mo = new MutationObserver(() => (document.body.style.overflow === "hidden" ? lenis.stop() : lenis.start()));
-    mo.observe(document.body, { attributes: true, attributeFilter: ["style"] });
-
+    let lastY = window.scrollY, lastT = performance.now(), vel = 0, raf = 0;
+    const decay = () => {
+      vel *= 0.9;
+      document.documentElement.style.setProperty("--vel", vel.toFixed(2));
+      (window as unknown as { __vel: number }).__vel = vel;
+      raf = Math.abs(vel) > 0.05 ? requestAnimationFrame(decay) : 0;
+    };
+    const on = () => {
+      const now = performance.now();
+      const v = ((window.scrollY - lastY) / Math.max(8, now - lastT)) * 16;
+      vel = Math.max(-40, Math.min(40, vel * 0.6 + v * 0.4));
+      lastY = window.scrollY;
+      lastT = now;
+      if (!raf) raf = requestAnimationFrame(decay);
+    };
+    addEventListener("scroll", on, { passive: true });
     return () => {
-      mo.disconnect();
-      gsap.ticker.remove(tick);
-      lenis.destroy();
-      delete window.__lenis;
+      removeEventListener("scroll", on);
+      cancelAnimationFrame(raf);
     };
   }, []);
 
   useEffect(() => {
-    window.__lenis?.scrollTo(0, { immediate: true });
+    window.scrollTo(0, 0);
     const id = setTimeout(() => ScrollTrigger.refresh(), 120);
     return () => clearTimeout(id);
   }, [pathname]);

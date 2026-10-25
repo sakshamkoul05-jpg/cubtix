@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { slides } from "@/lib/offers";
 import { photo } from "@/lib/products";
 import { ArrowRight } from "../Icons";
+import { sparkle } from "../motion/fly";
 
 const DURATION = 6000;
 
@@ -27,6 +28,7 @@ export default function HeroSlider() {
       className={`hs${paused ? " is-paused" : ""}`}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
+      onPointerMove={(e) => e.pointerType === "mouse" && sparkle(e, slides[i].theme === "black" ? "#F6D36B" : "#ffffff")}
       onTouchStart={(e) => (touch.current = e.touches[0].clientX)}
       onTouchEnd={(e) => {
         if (touch.current === null) return;

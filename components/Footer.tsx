@@ -63,7 +63,7 @@ export default function Footer() {
       <div className="wrap footer-base">
         <span>© {new Date().getFullYear()} {site.name}. All rights reserved.</span>
         <span>Owner: {site.owner}</span>
-        <button type="button" className="to-top" data-magnetic onClick={() => (window.__lenis ? window.__lenis.scrollTo(0, { duration: 1.6 }) : window.scrollTo({ top: 0, behavior: "smooth" }))}>
+        <button type="button" className="to-top" data-magnetic onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
           Back to top ↑
         </button>
       </div>

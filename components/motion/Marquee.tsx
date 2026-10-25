@@ -18,10 +18,17 @@ export default function Marquee() {
     wrap?.addEventListener("pointerenter", enter);
     wrap?.addEventListener("pointerleave", leave);
 
+    let visible = false;
+    const io = new IntersectionObserver(([e]) => {
+      visible = e.isIntersecting;
+      if (visible && !raf) { last = performance.now(); raf = requestAnimationFrame(tick); }
+    });
+    if (wrap) io.observe(wrap);
     const tick = (now: number) => {
+      if (!visible) { raf = 0; return; }
       const dt = Math.min(3, (now - last) / 16.7);
       last = now;
-      const vel = window.__lenis?.velocity ?? 0;
+      const vel = ((window as unknown as { __vel?: number }).__vel ?? 0) * 0.6;
       skew += (Math.max(-12, Math.min(12, vel * 0.5)) - skew) * 0.1;
       rows.current.forEach((row, i) => {
         if (!row) return;
@@ -33,8 +40,8 @@ export default function Marquee() {
       });
       raf = requestAnimationFrame(tick);
     };
-    raf = requestAnimationFrame(tick);
     return () => {
+      io.disconnect();
       cancelAnimationFrame(raf);
       wrap?.removeEventListener("pointerenter", enter);
       wrap?.removeEventListener("pointerleave", leave);

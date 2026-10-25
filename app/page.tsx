@@ -5,6 +5,7 @@ import Marquee from "@/components/motion/Marquee";
 import Departments from "@/components/motion/Departments";
 import Split from "@/components/motion/Split";
 import HeroSlider from "@/components/home/HeroSlider";
+import GiftUnbox from "@/components/motion/GiftUnbox";
 import CategoryBubbles from "@/components/home/CategoryBubbles";
 import ProductRail from "@/components/home/ProductRail";
 import { Promises, VisitBlock } from "@/components/Sections";
@@ -76,6 +77,8 @@ export default function Home() {
           })}
         </div>
       </section>
+
+      <GiftUnbox />
 
       <Marquee />
 
