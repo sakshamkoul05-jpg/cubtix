@@ -47,7 +47,7 @@ export default function ContactForm() {
           <span>Looking for</span>
           <select name="topic" defaultValue="General enquiry">
             <option>General enquiry</option>
-            <option>Bulk / wholesale order</option>
+            <option>Bulk order</option>
             <option>Return gifts</option>
             {categories.map((c) => (
               <option key={c.slug}>{c.name}</option>

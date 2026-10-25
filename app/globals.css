@@ -4202,3 +4202,36 @@ input, textarea { cursor: text; }
 .logo-v3.is-light .logo-sub { color: var(--gold-soft); }
 @media (max-width: 600px) { .logo-v3 .logo-svg { width: 40px; height: 40px; } .logo-v3 .logo-word { font-size: 25px; } .logo-v3 .logo-sub { font-size: 9.5px; } }
 .logo-v3 .logo-sub { text-transform: none !important; letter-spacing: 0.01em !important; }
+
+/* v10 — Cubtix "smiling C + little cube" logo */
+.logo-v4 { display: inline-flex; align-items: center; gap: 8px; }
+.logo-v4 .logo-svg { flex: none; overflow: visible; }
+.logo-v4 .logo-svg g:last-child { transform-box: fill-box; transform-origin: center; transition: transform 0.5s cubic-bezier(0.3, 1.6, 0.5, 1); }
+.logo-link:hover .logo-v4 .logo-svg g:last-child { transform: translate(2px, -3px) rotate(30deg); }
+.logo-v4 .logo-text { display: grid; gap: 3px; line-height: 1; }
+.logo-v4 .logo-word { font-size: 31px; font-weight: 800; letter-spacing: -0.05em; color: var(--ink); text-transform: lowercase; }
+.logo-v4 .logo-word b { color: var(--red); font-weight: 800; }
+.logo-v4 .logo-i { position: relative; display: inline-block; }
+.logo-v4 .logo-icube { position: absolute; left: 50%; top: -0.06em; width: 0.34em; height: 0.38em; transform: translateX(-50%) rotate(12deg); }
+.logo-v4 .logo-sub { font-size: 11px; font-weight: 600; font-style: italic; text-transform: none !important; letter-spacing: 0.01em !important; color: var(--gold-text); }
+.logo-v4.is-light .logo-word { color: #fff; }
+.logo-v4.is-light .logo-word b { color: #FF6B86; }
+.logo-v4.is-light .logo-sub { color: var(--gold-soft); }
+@media (max-width: 600px) { .logo-v4 .logo-svg { width: 40px; height: 40px; } .logo-v4 .logo-word { font-size: 26px; } .logo-v4 .logo-sub { font-size: 9.5px; } }
+
+/* prices on cards */
+.pcard-price { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.pcard-price strong { font-size: 20px; font-weight: 800; color: var(--ink); letter-spacing: -0.02em; }
+.pcard-bulk { font-size: 11.5px; font-weight: 500; color: var(--muted); }
+.logo-v4 .logo-svg { margin: -4px -2px -4px -6px; }
+@media (max-width: 600px) { .logo-v4 .logo-svg { width: 46px; height: 46px; } }
+
+/* v11 — Cubtix identity: faceted cube-C monogram + clean wordmark */
+.logo-v5 { display: inline-flex; align-items: center; gap: 11px; }
+.logo-v5 .logo-svg { flex: none; margin: 0; overflow: visible; }
+.logo-v5 .logo-text { display: grid; gap: 4px; line-height: 1; }
+.logo-v5 .logo-word { font-size: 28px; font-weight: 700; letter-spacing: -0.035em; color: var(--ink); text-transform: none; }
+.logo-v5 .logo-sub { font-size: 9.5px; font-weight: 600; font-style: normal; text-transform: uppercase !important; letter-spacing: 0.14em !important; color: #8A6A2A; }
+.logo-v5.is-light .logo-word { color: #fff; }
+.logo-v5.is-light .logo-sub { color: #E9C77B; }
+@media (max-width: 600px) { .logo-v5 .logo-svg { width: 40px; height: 40px; } .logo-v5 .logo-word { font-size: 24px; } .logo-v5 .logo-sub { font-size: 8px; letter-spacing: 0.1em !important; } }

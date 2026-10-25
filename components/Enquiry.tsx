@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { productPhoto, products } from "@/lib/products";
+import { formatPrice, productPhoto, products } from "@/lib/products";
 import { site, whatsappLink } from "@/lib/site";
 import { Close, ListIcon, Plus, Tick, WaIcon, ArrowRight } from "./Icons";
 import { flyToList } from "./motion/fly";
@@ -88,7 +88,7 @@ export function buildMessage(lines: Line[], extra?: string) {
   const rows = lines
     .map((l, i) => {
       const p = products.find((x) => x.id === l.id);
-      return p ? `${i + 1}. ${p.name} — Qty ${l.qty}` : null;
+      return p ? `${i + 1}. ${p.name}${formatPrice(p.price) ? ` (${formatPrice(p.price)})` : ""} — Qty ${l.qty}` : null;
     })
     .filter(Boolean)
     .join("\n");
@@ -141,6 +141,7 @@ function EnquiryDrawer() {
   const [note, setNote] = useState("");
   const href = whatsappLink(buildMessage(lines, note.trim() ? `Note: ${note.trim()}` : undefined));
   const totalQty = lines.reduce((a, l) => a + l.qty, 0);
+  const total = lines.reduce((a, l) => a + (products.find((x) => x.id === l.id)?.price ?? 0) * l.qty, 0);
 
   return (
     <div className={`drawer-root${open ? " is-open" : ""}`} aria-hidden={!open}>
@@ -149,7 +150,7 @@ function EnquiryDrawer() {
         <div className="drawer-head">
           <div>
             <h2 className="drawer-title">My list</h2>
-            <p className="drawer-sub">{lines.length} products · {totalQty} pcs</p>
+            <p className="drawer-sub">{lines.length} products · {totalQty} pcs{total > 0 ? ` · approx. ${formatPrice(total)}` : ""}</p>
           </div>
           <button type="button" className="icon-btn" onClick={() => setOpen(false)} aria-label="Close list">
             <Close />
@@ -175,7 +176,7 @@ function EnquiryDrawer() {
                     <img src={productPhoto(p, 160)} alt="" className="drawer-thumb" />
                     <div className="drawer-line-main">
                       <div className="drawer-line-name">{p.name}</div>
-                      {p.note && <div className="drawer-line-note">{p.note}</div>}
+                      <div className="drawer-line-note">{formatPrice(p.price) ?? p.note}</div>
                       <div className="qty">
                         <button type="button" onClick={() => setQty(l.id, l.qty - 1)} aria-label={`Decrease ${p.name}`}>−</button>
                         <input

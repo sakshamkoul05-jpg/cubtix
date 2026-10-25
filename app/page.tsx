@@ -23,8 +23,8 @@ const about = [
     a: `Cubtix is a toys, gifts and accessories store at ${site.address.line1}, Dharamshala, run by ${site.owner}. We stock Hot Wheels and die-cast cars, toys, soft toys, keychains, table mats, diaries, wallets, stationery and jewellery — for one gift or a full carton.`,
   },
   {
-    q: "Wholesale gifts & toys in Dharamshala",
-    a: "Shop owners, schools and event planners can buy in bulk. Send your list and quantities on WhatsApp and we reply with wholesale prices, stock and dispatch details.",
+    q: "Affordable gifts & toys in Dharamshala",
+    a: "Shop owners, schools and event planners can buy in bulk. Send your list and quantities on WhatsApp and we reply with our best prices, stock and dispatch details.",
   },
   {
     q: "Return gifts for birthdays & weddings",
@@ -48,13 +48,13 @@ export default function Home() {
       <section className="h7">
         <div className="wrap h7-grid">
           <div className="h7-copy">
-            <p className="h7-kicker">Retail &amp; Wholesale · {site.address.line1}, Dharamshala</p>
+            <p className="h7-kicker">Affordable Prices · {site.address.line1}, Dharamshala</p>
             <h1 className="h7-title">
               <span>{products.length}+</span> gifts, toys &amp; accessories
             </h1>
             <p className="h7-sub">Little Things, Big Happiness!</p>
             <ul className="h7-points">
-              <li>One piece or a full carton — retail &amp; bulk prices</li>
+              <li>Affordable Prices — one piece or a full carton</li>
               <li>Price &amp; stock confirmed on WhatsApp before you pay</li>
               <li>9 departments under one roof</li>
             </ul>
@@ -73,7 +73,7 @@ export default function Home() {
                 <img src={photo(ph)} alt="" loading="eager" />
               </div>
             ))}
-            <span className="h7-badge">✓ Wholesale rates</span>
+            <span className="h7-badge">✓ Affordable Prices</span>
           </div>
         </div>
       </section>
@@ -152,12 +152,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* WHOLESALE */}
+      {/* BULK ORDERS */}
       <section className="bulk6">
         <div className="wrap bulk6-inner">
           <div>
             <p className="bulk6-kicker">For shops, schools &amp; events</p>
-            <h2 className="bulk6-title">Wholesale &amp; return gifts</h2>
+            <h2 className="bulk6-title">Affordable Prices on bulk &amp; return gifts</h2>
             <p className="bulk6-text">Send your list and quantities on WhatsApp — we reply with bulk prices and dispatch details.</p>
           </div>
           <div className="bulk6-actions">

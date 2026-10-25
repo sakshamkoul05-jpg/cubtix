@@ -7,7 +7,7 @@ import { Search, WaIcon } from "./Icons";
 import { categories, products, type CategorySlug } from "@/lib/products";
 import { whatsappLink } from "@/lib/site";
 
-type Sort = "featured" | "new" | "az";
+type Sort = "featured" | "new" | "az" | "low" | "high";
 
 export default function CatalogueView() {
   const params = useSearchParams();
@@ -33,6 +33,8 @@ export default function CatalogueView() {
       const catName = categories.find((c) => c.slug === p.category)?.name ?? "";
       return `${p.name} ${p.note ?? ""} ${catName}`.toLowerCase().includes(term);
     });
+    if (sort === "low") return [...out].sort((a, b) => (a.price ?? 1e9) - (b.price ?? 1e9));
+    if (sort === "high") return [...out].sort((a, b) => (b.price ?? 0) - (a.price ?? 0));
     if (sort === "az") return [...out].sort((a, b) => a.name.localeCompare(b.name));
     if (sort === "new") return [...out].sort((a, b) => Number(!!b.isNew) - Number(!!a.isNew));
     return out;
@@ -79,6 +81,8 @@ export default function CatalogueView() {
             <select value={sort} onChange={(e) => setSort(e.target.value as Sort)}>
               <option value="featured">Featured</option>
               <option value="new">New arrivals first</option>
+              <option value="low">Price: low to high</option>
+              <option value="high">Price: high to low</option>
               <option value="az">Name: A–Z</option>
             </select>
           </label>

@@ -27,10 +27,19 @@ export default function GiftFinder({ initial, compact = false }: { initial?: Rec
   const whoMeta = recipients.find((r) => r.id === who);
   const results = useMemo(() => {
     if (!who) return [];
-    const list = productsFor(who);
+    const ranges: Record<string, [number, number]> = {
+      "Under ₹200": [0, 199],
+      "₹200 – ₹500": [200, 500],
+      "₹500 – ₹1,000": [500, 1000],
+      "₹1,000 +": [1000, 1e9],
+    };
+    const r = budget ? ranges[budget] : undefined;
+    const all = productsFor(who);
+    const inBudget = r ? all.filter((p) => p.price && p.price >= r[0] && p.price <= r[1]) : all;
+    const list = inBudget.length ? inBudget : all;
     // New arrivals first, then the rest
     return [...list].sort((a, b) => Number(!!b.isNew) - Number(!!a.isNew)).slice(0, compact ? 8 : 12);
-  }, [who, compact]);
+  }, [who, compact, budget]);
 
   const reset = () => {
     setStep(0);

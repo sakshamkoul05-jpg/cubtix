@@ -49,7 +49,70 @@ export type Product = {
   photo: string;
   isNew?: boolean;
   for?: Recipient[];
+  price?: number;
 };
+
+// PRICES (₹) — edit here. Key = product name exactly as written below.
+// Remove a line (or set 0) to show "Price on request" for that product.
+export const priceList: Record<string, number> = {
+  // Hot Wheels
+  "Classic Red Model Car": 349,
+  "Die-cast Car Collection": 899,
+  "Racing Track Mat with Cars": 599,
+  "Mixed Toy Car Bucket": 499,
+  "Construction Truck Set": 449,
+  "Vintage Beetle with Surfboard": 699,
+  // Toys
+  "Robot Pet Toy": 1299,
+  "Big Building Blocks": 599,
+  "Wooden Animals & Blocks": 449,
+  "Tea Party Play Set": 399,
+  "Wooden Toy Vehicles": 349,
+  "Wooden Toy Basket": 799,
+  // Soft toys
+  "Teddy Bear with Bow": 499,
+  "Classic Teddy (Large)": 999,
+  "Panda Plush": 599,
+  "Beige Teddy (Small)": 249,
+  "Handmade Rag Dolls": 299,
+  // Keychains
+  "Brass Eagle Keychain": 199,
+  "Dragon Keychain": 149,
+  "Golden Fish Keychain": 129,
+  "Brass Crab Keychain": 129,
+  "House-shaped Keychain": 99,
+  // Table mats
+  "Round Cane Placemats": 499,
+  "Woven Water-Hyacinth Mats": 399,
+  "Handwoven Table Runner": 349,
+  "Lace-edge Dinner Set Mats": 449,
+  // Diaries
+  "Kraft Spiral Notebook": 99,
+  "Terrazzo Planner": 249,
+  "Minimal White Planner": 299,
+  "Pocket Journal": 149,
+  "Writing Notebook": 79,
+  // Wallets
+  "Distressed Leather Wallet": 599,
+  "Yellow Chain Sling Bag": 699,
+  "Bi-fold Card Holder": 249,
+  "Leather Coin Pouch": 149,
+  "Slim Tan Wallet": 399,
+  // Stationery
+  "Pastel Desk Set": 349,
+  "Notebook & Marker Set": 199,
+  "Sketch & Geometry Kit": 249,
+  // Jewellery
+  "Stackable Rings": 199,
+  "Stud Earrings in Gift Box": 249,
+  "Charm Bracelet": 299,
+  "Pendant Necklace": 349,
+  "Glass Bangle Sets": 199,
+  "Beaded Bracelet Stack": 149,
+};
+
+/** "₹1,299" or null when no price is set */
+export const formatPrice = (n?: number) => (n && n > 0 ? `₹${n.toLocaleString("en-IN")}` : null);
 
 /** Path of a photo in /public/photos (accepts a Pexels ID or your own file name). */
 export const photo = (name: string | number) => `/photos/${name}.jpg`;
@@ -70,7 +133,7 @@ export const categories: Category[] = [
 
 type Row = [name: string, photo: string, note?: string, isNew?: boolean, forWho?: Recipient[]];
 const p = (category: CategorySlug, items: Row[]): Product[] =>
-  items.map(([name, ph, note, isNew, forWho], i) => ({ id: `${category}-${i + 1}`, name, category, photo: ph, note, isNew, for: forWho }));
+  items.map(([name, ph, note, isNew, forWho], i) => ({ id: `${category}-${i + 1}`, name, category, photo: ph, note, isNew, for: forWho, price: priceList[name] }));
 
 export const products: Product[] = [
   ...p("hot-wheels", [

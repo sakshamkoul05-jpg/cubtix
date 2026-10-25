@@ -1,36 +1,31 @@
-// Cubtix logo — an isometric CUBE that is also a GIFT BOX (red faces, gold ribbon & bow),
-// with a gold sparkle for "happiness". Wordmark: "cubtix", the i's dot is a tiny gold cube.
-export function LogoMark({ size = 46 }: { size?: number }) {
+// Cubtix identity — a faceted hexagonal "C" drawn as an isometric cube (the "Cub" in Cubtix),
+// opening to the right, holding a small gold cube at its heart: "Little Things, Big Happiness!"
+
+export function LogoMark({ size = 48 }: { size?: number }) {
   return (
     <svg className="logo-svg" width={size} height={size} viewBox="0 0 64 64" aria-hidden="true">
-      {/* faces */}
-      <polygon points="32,12 54,24 32,36 10,24" fill="#FF4D6B" />
-      <polygon points="10,24 32,36 32,60 10,48" fill="#E11D48" />
-      <polygon points="32,36 54,24 54,48 32,60" fill="#A80F37" />
-      {/* ribbon: sides */}
-      <polygon points="19,28.9 23,31.1 23,55.1 19,52.9" fill="#F6C445" />
-      <polygon points="41,31.1 45,28.9 45,52.9 41,55.1" fill="#D9A520" />
-      {/* ribbon: top cross */}
-      <polygon points="19,28.9 23,31.1 45,19.1 41,16.9" fill="#FFD866" />
-      <polygon points="41,31.1 45,28.9 23,16.9 19,19.1" fill="#FFD866" />
-      {/* bow */}
-      <path d="M32 24 C 24 14, 15 18, 21 23 C 24 25.5, 29 25, 32 24 Z" fill="#F6C445" stroke="#C98E12" strokeWidth="1" />
-      <path d="M32 24 C 40 14, 49 18, 43 23 C 40 25.5, 35 25, 32 24 Z" fill="#FFD866" stroke="#C98E12" strokeWidth="1" />
-      <ellipse cx="32" cy="24" rx="3.2" ry="2.4" fill="#E8B931" stroke="#C98E12" strokeWidth="1" />
-      {/* sparkle */}
-      <path d="M55 3 L56.6 8.4 L62 10 L56.6 11.6 L55 17 L53.4 11.6 L48 10 L53.4 8.4 Z" fill="#E8B931" />
+      {/* top faces (light) */}
+      <polygon points="9.5,19 32,6 32,20 21.6,26" fill="#FB5373" />
+      <polygon points="32,6 54.5,19 42.4,26 32,20" fill="#F43F5E" />
+      {/* left face (mid) */}
+      <polygon points="9.5,45 9.5,19 21.6,26 21.6,38" fill="#E11D48" />
+      {/* bottom faces (dark) */}
+      <polygon points="32,58 9.5,45 21.6,38 32,44" fill="#BE123C" />
+      <polygon points="54.5,45 32,58 32,44 42.4,38" fill="#9F1239" />
+      {/* the little gold cube */}
+      <polygon points="32,25.5 37.6,28.75 32,32 26.4,28.75" fill="#FCD34D" />
+      <polygon points="26.4,28.75 32,32 32,38.5 26.4,35.25" fill="#F0B429" />
+      <polygon points="32,32 37.6,28.75 37.6,35.25 32,38.5" fill="#C98A0B" />
     </svg>
   );
 }
 
 export default function Logo({ light = false }: { light?: boolean }) {
   return (
-    <span className={`logo logo-v3${light ? " is-light" : ""}`}>
+    <span className={`logo logo-v5${light ? " is-light" : ""}`}>
       <LogoMark />
       <span className="logo-text">
-        <span className="logo-word" aria-label="Cubtix">
-          cub<b>t<span className="logo-i">ı<i aria-hidden="true" /></span>x</b>
-        </span>
+        <span className="logo-word">Cubtix</span>
         <span className="logo-sub">Little Things, Big Happiness!</span>
       </span>
     </span>
