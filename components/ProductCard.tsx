@@ -8,7 +8,7 @@ import { whatsappLink } from "@/lib/site";
 export default function ProductCard({ product }: { product: Product }) {
   const cat = categoryBySlug(product.category)!;
   return (
-    <article className="pcard">
+    <article className="pcard" style={{ "--c": cat.color } as React.CSSProperties}>
       <div className="pcard-media">
         <Photo src={productPhoto(product)} alt={product.name} tint={cat.tint} label={cat.name} />
         {product.isNew && <span className="tag-new">New</span>}

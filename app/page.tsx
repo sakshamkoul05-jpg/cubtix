@@ -1,62 +1,107 @@
 import Link from "next/link";
-import ProductCard from "@/components/ProductCard";
 import GiftFinder from "@/components/GiftFinder";
-import Collections from "@/components/Collections";
-import Shelf from "@/components/Shelf";
 import ToyBox from "@/components/motion/ToyBox";
 import Marquee from "@/components/motion/Marquee";
 import Departments from "@/components/motion/Departments";
 import Split from "@/components/motion/Split";
-import { Promises, SectionHead, VisitBlock } from "@/components/Sections";
+import HeroSlider from "@/components/home/HeroSlider";
+import CategoryBubbles from "@/components/home/CategoryBubbles";
+import ProductRail from "@/components/home/ProductRail";
+import { Promises, VisitBlock } from "@/components/Sections";
 import { ArrowRight, WaIcon } from "@/components/Icons";
-import { categories, products } from "@/lib/products";
+import { categoryBySlug, photo, products, productsIn } from "@/lib/products";
+import { promos } from "@/lib/offers";
 import { site, whatsappLink } from "@/lib/site";
 
+const pick = (ids: string[]) => ids.map((id) => products.find((p) => p.id === id)!).filter(Boolean);
+
 export default function Home() {
-  const fresh = products.filter((p) => p.isNew).slice(0, 8);
+  const trending = pick([
+    "hot-wheels-1", "soft-toys-1", "jewellery-1", "toys-1", "keychains-1", "wallets-1",
+    "diaries-2", "soft-toys-3", "stationery-1", "jewellery-5", "hot-wheels-3", "table-mats-1",
+  ]);
+  const color = (s: Parameters<typeof categoryBySlug>[0]) => categoryBySlug(s)!.color;
 
   return (
     <>
-      {/* HERO */}
-      <section className="hero hero-v5">
-        <div className="wrap hero-grid">
-          <div className="hero-copy">
-            <p className="eyebrow">{site.address.line1} · Dharamshala, HP</p>
-            <h1 data-split="chars">
-              <Split text="The" chars /> <em><Split text="Gift House" chars /></em>
-              <br />
-              <Split text="of Dharamshala." chars />
-            </h1>
-            <p className="hero-text" data-reveal="up">
-              Toys, soft toys, Hot Wheels, stationery, wallets and jewellery — chosen for gifting, packed with care, and
-              priced for one piece or a hundred.
-            </p>
+      {/* HERO: slider + two offer tiles */}
+      <section className="hero6">
+        <div className="wrap hero6-grid">
+          <HeroSlider />
+          <div className="hero6-side">
+            <Link href="/gift-finder" className="tile tile-yellow">
+              <span className="tile-kicker">Not sure what to buy?</span>
+              <span className="tile-title">Gift Finder</span>
+              <span className="tile-text">3 quick questions → the right gift</span>
+              <span className="tile-go">Start <ArrowRight size={16} /></span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={photo("8982666")} alt="" />
+            </Link>
+            <a href={whatsappLink("Hi Cubtix! I'd like bulk / return-gift prices. My requirement:")} target="_blank" rel="noopener noreferrer" className="tile tile-blue">
+              <span className="tile-kicker">Shops · schools · weddings</span>
+              <span className="tile-title">Bulk orders</span>
+              <span className="tile-text">Special rates on quantity</span>
+              <span className="tile-go"><WaIcon size={16} /> Ask on WhatsApp</span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={photo("16329479")} alt="" />
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <CategoryBubbles />
+
+      <ProductRail title="Trending at Cubtix" kicker="Most asked about this week" color="#DC2626" items={trending} href="/catalogue" />
+
+      {/* PROMO BANNERS */}
+      <section className="promos">
+        <div className="wrap promos-grid">
+          {promos.map((p) => {
+            const inner = (
+              <>
+                <div className="promo-copy">
+                  <h3>{p.title}</h3>
+                  <p>{p.text}</p>
+                  <span className="promo-cta">{p.msg ? <WaIcon size={16} /> : null}{p.cta} <ArrowRight size={16} /></span>
+                </div>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={photo(p.photo)} alt="" loading="lazy" />
+              </>
+            );
+            return p.href ? (
+              <Link key={p.title} href={p.href} className={`promo promo-${p.theme}`} data-reveal="up">{inner}</Link>
+            ) : (
+              <a key={p.title} href={whatsappLink(p.msg!)} target="_blank" rel="noopener noreferrer" className={`promo promo-${p.theme}`} data-reveal="up">{inner}</a>
+            );
+          })}
+        </div>
+      </section>
+
+      <Marquee />
+
+      <ProductRail title="Hot Wheels & cars" kicker="For young collectors" color={color("hot-wheels")} items={[...productsIn("hot-wheels"), ...productsIn("toys")]} href="/categories/hot-wheels" />
+
+      {/* DEPARTMENTS — horizontal scroll */}
+      <Departments />
+
+      <ProductRail title="Soft toys & teddies" kicker="Something to hug" color={color("soft-toys")} items={productsIn("soft-toys")} href="/categories/soft-toys" />
+
+      {/* PLAY: toy box */}
+      <section className="play">
+        <div className="wrap play-grid">
+          <div className="play-copy">
+            <p className="eyebrow">Play time</p>
+            <h2 className="sec-title" data-split><Split text="Go on —" /> <em><Split text="throw a toy." /></em></h2>
+            <p data-reveal="up">Grab any product in the box and toss it around. Tap one to open its shelf. (Yes, the shop is just as fun in person.)</p>
             <div className="hero-ctas" data-reveal="up">
-              <Link className="btn btn-green btn-lg" href="/gift-finder">Find the perfect gift <ArrowRight size={18} /></Link>
-              <Link className="btn btn-outline btn-lg" href="/catalogue">Browse the catalogue</Link>
-            </div>
-            <div className="hero-meta" data-reveal="up">
-              <span><strong data-count={categories.length}>{categories.length}</strong> departments</span>
-              <span><strong><span data-count={products.length}>{products.length}</span>+</strong> gift ideas</span>
-              <span><strong>Retail</strong> &amp; bulk</span>
+              <Link className="btn btn-green btn-lg" href="/catalogue">Browse all {products.length} products <ArrowRight size={18} /></Link>
             </div>
           </div>
           <ToyBox />
         </div>
       </section>
 
-      <Marquee />
-
-      {/* COLLECTIONS */}
-      <section className="section">
-        <div className="wrap">
-          <SectionHead eyebrow="The gift edit" title="Shop by" italic="who it’s for" link={{ href: "/gift-finder", label: "Open the Gift Finder" }} />
-          <Collections />
-        </div>
-      </section>
-
-      {/* DEPARTMENTS — horizontal scroll */}
-      <Departments />
+      <ProductRail title="Jewellery & accessories" kicker="Little sparkles" color={color("jewellery")} items={[...productsIn("jewellery"), ...productsIn("wallets")]} href="/categories/jewellery" />
 
       {/* GIFT FINDER */}
       <section className="section section-green" id="gift-finder">
@@ -70,53 +115,22 @@ export default function Home() {
         </div>
       </section>
 
-      {/* NEW IN */}
-      <section className="section">
-        <div className="wrap">
-          <SectionHead eyebrow="Fresh on the shelf" title="New" italic="arrivals" link={{ href: "/catalogue", label: `View all ${products.length}` }} />
-          <div className="pgrid">
-            {fresh.map((p) => (
-              <ProductCard key={p.id} product={p} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* SHOP THE SHELF */}
-      <section className="section section-cream">
-        <div className="wrap shelf-section">
-          <div className="shelf-intro">
-            <p className="eyebrow">Shop the shelf</p>
-            <h2 className="sec-title" data-split><Split text="Walk the store" /> <em><Split text="from your phone." /></em></h2>
-            <p data-reveal="up">Tap a number to see what&apos;s on that shelf at {site.address.line1} — then add it to your list or ask us about it.</p>
-          </div>
-          <Shelf />
-        </div>
-      </section>
+      <ProductRail title="Diaries, stationery & more" kicker="School bag & desk" color={color("stationery")} items={[...productsIn("diaries"), ...productsIn("stationery"), ...productsIn("keychains"), ...productsIn("table-mats")]} href="/catalogue" />
 
       {/* BULK */}
-      <section className="section section-green">
-        <div className="wrap bulk">
+      <section className="bulk6">
+        <div className="wrap bulk6-inner">
           <div>
-            <p className="eyebrow eyebrow-gold">For shops, schools &amp; events</p>
-            <h2 className="sec-title" data-split><Split text="Gifting by the" /> <em><Split text="dozen." /></em></h2>
-            <p className="bulk-text" data-reveal="up">
-              Return gifts, school prizes, corporate hampers or stock for your own shop — send us your list and quantities
-              and we&apos;ll reply with bulk pricing and dispatch details.
-            </p>
-            <div className="hero-ctas" data-reveal="up">
-              <a className="btn btn-gold btn-lg" href={whatsappLink("Hi Cubtix! I'd like bulk pricing. My requirement:")} target="_blank" rel="noopener noreferrer">
-                <WaIcon /> Request bulk pricing
-              </a>
-              <a className="btn btn-ghost-light btn-lg" href={`tel:${site.phones[0].tel}`}>Call {site.phones[0].display}</a>
-            </div>
+            <p className="bulk6-kicker">For shops, schools &amp; events</p>
+            <h2 className="bulk6-title" data-split><Split text="Gifting by the dozen." /></h2>
+            <p className="bulk6-text" data-reveal="up">Return gifts, school prizes, corporate hampers or stock for your own shop — send your list and quantities, we reply with bulk prices.</p>
           </div>
-          <ul className="bulk-list">
-            <li><span>01</span>Retailers &amp; resellers</li>
-            <li><span>02</span>Birthday &amp; wedding return gifts</li>
-            <li><span>03</span>School prizes &amp; kits</li>
-            <li><span>04</span>Corporate &amp; festive gifting</li>
-          </ul>
+          <div className="bulk6-actions" data-reveal="up">
+            <a className="btn btn-gold btn-lg" href={whatsappLink("Hi Cubtix! I'd like bulk pricing. My requirement:")} target="_blank" rel="noopener noreferrer">
+              <WaIcon /> Request bulk pricing
+            </a>
+            <a className="btn btn-ghost-light btn-lg" href={`tel:${site.phones[0].tel}`}>Call {site.phones[0].display}</a>
+          </div>
         </div>
       </section>
 

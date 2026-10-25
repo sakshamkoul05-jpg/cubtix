@@ -8,6 +8,7 @@ import { ListButton } from "./Enquiry";
 import { Close, Menu, Phone, Search, WaIcon } from "./Icons";
 import { categories } from "@/lib/products";
 import { site, whatsappLink } from "@/lib/site";
+import { ticker } from "@/lib/offers";
 
 const nav = [
   { href: "/", label: "Home" },
@@ -44,10 +45,14 @@ export default function Header() {
   return (
     <>
       <div className="announce">
-        <div className="wrap announce-inner">
-          <span>Retail &amp; bulk orders · {site.address.line1}, Dharamshala</span>
-          <a href={`tel:${site.phones[0].tel}`}><Phone size={14} /> {site.phones[0].display}</a>
+        <div className="ticker" aria-label="Offers">
+          <div className="ticker-track">
+            {[...ticker, ...ticker].map((t, i) => (
+              <span key={i} aria-hidden={i >= ticker.length}>✦ {t}</span>
+            ))}
+          </div>
         </div>
+        <a className="announce-phone" href={`tel:${site.phones[0].tel}`}><Phone size={14} /> {site.phones[0].display}</a>
       </div>
 
       <header className={`header${scrolled ? " is-scrolled" : ""}`}>

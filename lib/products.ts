@@ -38,6 +38,7 @@ export type Category = {
   line: string;
   cover: string;
   for: Recipient[];
+  color: string;
 };
 
 export type Product = {
@@ -56,15 +57,15 @@ export const photo = (name: string | number) => `/photos/${name}.jpg`;
 export const pexels = (name: string | number, _w?: number) => photo(name);
 
 export const categories: Category[] = [
-  { slug: "hot-wheels", name: "Hot Wheels", tint: "#E9EDF0", cover: "33846177", blurb: "Die-cast cars, gift packs and track sets for young collectors.", line: "For the collector in every family.", for: ["kids", "teens", "him"] },
-  { slug: "toys", name: "Toys", tint: "#F3EEE6", cover: "3661247", blurb: "Building, pretend-play, wooden and electronic toys.", line: "Play that keeps little hands busy.", for: ["little", "kids", "bulk"] },
-  { slug: "soft-toys", name: "Soft Toys", tint: "#F1ECE6", cover: "245914", blurb: "Teddies, pandas and plush friends, small to large.", line: "Something soft to hold on to.", for: ["little", "kids", "her"] },
-  { slug: "keychains", name: "Keychains", tint: "#ECE8E1", cover: "16043302", blurb: "Brass, metal and novelty keychains and charms.", line: "Small gifts that go everywhere.", for: ["teens", "her", "him", "bulk"] },
-  { slug: "table-mats", name: "Table Mats", tint: "#EFEBE3", cover: "19870054", blurb: "Placemats, runners and table sets for every home.", line: "Dress the table for every day.", for: ["home"] },
-  { slug: "diaries", name: "Diaries", tint: "#F2EDE6", cover: "5088025", blurb: "Notebooks, planners and journals for every age.", line: "Pages for plans, notes and secrets.", for: ["teens", "her", "him", "bulk"] },
-  { slug: "wallets", name: "Wallets", tint: "#EEE8E0", cover: "915917", blurb: "Wallets, card holders, pouches and bags.", line: "Everyday essentials, beautifully kept.", for: ["teens", "her", "him"] },
-  { slug: "stationery", name: "Stationery", tint: "#F4ECEA", cover: "8099596", blurb: "Desk sets, notebooks, markers and school supplies.", line: "Everything for the school bag.", for: ["kids", "teens", "bulk"] },
-  { slug: "jewellery", name: "Jewellery", tint: "#F1EAE3", cover: "20858959", blurb: "Rings, earrings, bracelets, bangles and pendants.", line: "Little sparkles for every day.", for: ["teens", "her"] },
+  { slug: "hot-wheels", color: "#2563EB", name: "Hot Wheels", tint: "#E9EDF0", cover: "33846177", blurb: "Die-cast cars, gift packs and track sets for young collectors.", line: "For the collector in every family.", for: ["kids", "teens", "him"] },
+  { slug: "toys", color: "#F97316", name: "Toys", tint: "#F3EEE6", cover: "3661247", blurb: "Building, pretend-play, wooden and electronic toys.", line: "Play that keeps little hands busy.", for: ["little", "kids", "bulk"] },
+  { slug: "soft-toys", color: "#EC4899", name: "Soft Toys", tint: "#F1ECE6", cover: "245914", blurb: "Teddies, pandas and plush friends, small to large.", line: "Something soft to hold on to.", for: ["little", "kids", "her"] },
+  { slug: "keychains", color: "#7C3AED", name: "Keychains", tint: "#ECE8E1", cover: "16043302", blurb: "Brass, metal and novelty keychains and charms.", line: "Small gifts that go everywhere.", for: ["teens", "her", "him", "bulk"] },
+  { slug: "table-mats", color: "#0D9488", name: "Table Mats", tint: "#EFEBE3", cover: "19870054", blurb: "Placemats, runners and table sets for every home.", line: "Dress the table for every day.", for: ["home"] },
+  { slug: "diaries", color: "#DC2626", name: "Diaries", tint: "#F2EDE6", cover: "5088025", blurb: "Notebooks, planners and journals for every age.", line: "Pages for plans, notes and secrets.", for: ["teens", "her", "him", "bulk"] },
+  { slug: "wallets", color: "#A16207", name: "Wallets", tint: "#EEE8E0", cover: "915917", blurb: "Wallets, card holders, pouches and bags.", line: "Everyday essentials, beautifully kept.", for: ["teens", "her", "him"] },
+  { slug: "stationery", color: "#16A34A", name: "Stationery", tint: "#F4ECEA", cover: "8099596", blurb: "Desk sets, notebooks, markers and school supplies.", line: "Everything for the school bag.", for: ["kids", "teens", "bulk"] },
+  { slug: "jewellery", color: "#D4A017", name: "Jewellery", tint: "#F1EAE3", cover: "20858959", blurb: "Rings, earrings, bracelets, bangles and pendants.", line: "Little sparkles for every day.", for: ["teens", "her"] },
 ];
 
 type Row = [name: string, photo: string, note?: string, isNew?: boolean, forWho?: Recipient[]];
