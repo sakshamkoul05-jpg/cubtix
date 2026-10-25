@@ -45,7 +45,7 @@ export default function ContactPage() {
                     <a className="contact-value" href={`tel:${p.tel}`}>{p.display}</a>
                     <div className="contact-actions">
                       <a href={`tel:${p.tel}`}>Call</a>
-                      <a href={`https://wa.me/${p.tel.replace("+", "")}?text=${encodeURIComponent("Hi Cubtix!")}`} target="_blank" rel="noopener noreferrer">WhatsApp</a>
+                      {i === 0 && <a href={whatsappLink("Hi Cubtix!")} target="_blank" rel="noopener noreferrer">WhatsApp</a>}
                     </div>
                   </div>
                 </div>

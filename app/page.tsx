@@ -1,58 +1,115 @@
 import Link from "next/link";
-import GiftFinder from "@/components/GiftFinder";
-import ToyBox from "@/components/motion/ToyBox";
-import Marquee from "@/components/motion/Marquee";
-import Departments from "@/components/motion/Departments";
-import Split from "@/components/motion/Split";
-import HeroSlider from "@/components/home/HeroSlider";
-import GiftUnbox from "@/components/motion/GiftUnbox";
 import CategoryBubbles from "@/components/home/CategoryBubbles";
-import ProductRail from "@/components/home/ProductRail";
+import HomeSearch from "@/components/home/HomeSearch";
+import ProductCard from "@/components/ProductCard";
 import { Promises, VisitBlock } from "@/components/Sections";
 import { ArrowRight, WaIcon } from "@/components/Icons";
-import { categoryBySlug, photo, products, productsIn } from "@/lib/products";
+import { categories, photo, products, productsIn } from "@/lib/products";
 import { promos } from "@/lib/offers";
 import { site, whatsappLink } from "@/lib/site";
 
 const pick = (ids: string[]) => ids.map((id) => products.find((p) => p.id === id)!).filter(Boolean);
 
+// Extra collection tiles shown after the 9 departments in "Top Collections"
+const extraCollections = [
+  { name: "Return Gifts", href: "/gift-finder?for=bulk", photo: "1666069", color: "#E11D48" },
+  { name: "Gifts for Kids", href: "/gift-finder?for=kids", photo: "8289844", color: "#F97316" },
+  { name: "Gifts for Her", href: "/gift-finder?for=her", photo: "39070291", color: "#EC4899" },
+];
+
+const about = [
+  {
+    q: "About Cubtix",
+    a: `Cubtix is a toys, gifts and accessories store at ${site.address.line1}, Dharamshala, run by ${site.owner}. We stock Hot Wheels and die-cast cars, toys, soft toys, keychains, table mats, diaries, wallets, stationery and jewellery — for one gift or a full carton.`,
+  },
+  {
+    q: "Wholesale gifts & toys in Dharamshala",
+    a: "Shop owners, schools and event planners can buy in bulk. Send your list and quantities on WhatsApp and we reply with wholesale prices, stock and dispatch details.",
+  },
+  {
+    q: "Return gifts for birthdays & weddings",
+    a: "Tell us your budget and the number of pieces. We suggest return gifts that fit, and can pack them ready to hand out.",
+  },
+  {
+    q: "How ordering works",
+    a: "Add products to your list or message us directly on WhatsApp (92167 53108). We confirm price, stock and delivery before you pay — no online payment needed.",
+  },
+];
+
 export default function Home() {
-  const trending = pick([
-    "hot-wheels-1", "soft-toys-1", "jewellery-1", "toys-1", "keychains-1", "wallets-1",
-    "diaries-2", "soft-toys-3", "stationery-1", "jewellery-5", "hot-wheels-3", "table-mats-1",
+  const handpicked = pick([
+    "hot-wheels-1", "soft-toys-1", "jewellery-1", "toys-1",
+    "keychains-1", "wallets-1", "diaries-2", "stationery-1",
   ]);
-  const color = (s: Parameters<typeof categoryBySlug>[0]) => categoryBySlug(s)!.color;
 
   return (
     <>
-      {/* HERO: slider + two offer tiles */}
-      <section className="hero6">
-        <div className="wrap hero6-grid">
-          <HeroSlider />
-          <div className="hero6-side">
-            <Link href="/gift-finder" className="tile tile-yellow">
-              <span className="tile-kicker">Not sure what to buy?</span>
-              <span className="tile-title">Gift Finder</span>
-              <span className="tile-text">3 quick questions → the right gift</span>
-              <span className="tile-go">Start <ArrowRight size={16} /></span>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={photo("8982666")} alt="" />
-            </Link>
-            <a href={whatsappLink("Hi Cubtix! I'd like bulk / return-gift prices. My requirement:")} target="_blank" rel="noopener noreferrer" className="tile tile-blue">
-              <span className="tile-kicker">Shops · schools · weddings</span>
-              <span className="tile-title">Bulk orders</span>
-              <span className="tile-text">Special rates on quantity</span>
-              <span className="tile-go"><WaIcon size={16} /> Ask on WhatsApp</span>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={photo("16329479")} alt="" />
-            </a>
+      {/* HERO */}
+      <section className="h7">
+        <div className="wrap h7-grid">
+          <div className="h7-copy">
+            <p className="h7-kicker">Retail &amp; Wholesale · {site.address.line1}, Dharamshala</p>
+            <h1 className="h7-title">
+              <span>{products.length}+</span> gifts, toys &amp; accessories
+            </h1>
+            <p className="h7-sub">Little Things, Big Happiness!</p>
+            <ul className="h7-points">
+              <li>One piece or a full carton — retail &amp; bulk prices</li>
+              <li>Price &amp; stock confirmed on WhatsApp before you pay</li>
+              <li>9 departments under one roof</li>
+            </ul>
+            <HomeSearch />
+            <div className="h7-ctas">
+              <Link className="btn h7-shop" href="/catalogue">Shop Now <ArrowRight size={18} /></Link>
+              <a className="btn h7-wa" href={whatsappLink("Hi Cubtix! I'd like to order / ask about a product.")} target="_blank" rel="noopener noreferrer">
+                <WaIcon /> Order on WhatsApp
+              </a>
+            </div>
+          </div>
+          <div className="h7-art" aria-hidden="true">
+            {["245914", "33846177", "29544342", "8982666"].map((ph, i) => (
+              <div key={ph} className={`h7-tile h7-tile-${i + 1}`}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={photo(ph)} alt="" loading="eager" />
+              </div>
+            ))}
+            <span className="h7-badge">✓ Wholesale rates</span>
           </div>
         </div>
       </section>
 
       <CategoryBubbles />
 
-      <ProductRail title="Trending at Cubtix" kicker="Most asked about this week" color="#DC2626" items={trending} href="/catalogue" />
+      {/* TOP COLLECTIONS */}
+      <section className="hsec">
+        <div className="wrap">
+          <div className="shead shead-center">
+            <h2 className="shead-title">Top Collections</h2>
+          </div>
+          <div className="tc-grid">
+            {categories.map((c) => (
+              <Link key={c.slug} href={`/categories/${c.slug}`} className="tc" style={{ "--c": c.color } as React.CSSProperties}>
+                <span className="tc-img">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={photo(c.cover)} alt="" loading="lazy" />
+                </span>
+                <span className="tc-name">{c.name}</span>
+                <span className="tc-count">{productsIn(c.slug).length} items</span>
+              </Link>
+            ))}
+            {extraCollections.map((c) => (
+              <Link key={c.name} href={c.href} className="tc" style={{ "--c": c.color } as React.CSSProperties}>
+                <span className="tc-img">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={photo(c.photo)} alt="" loading="lazy" />
+                </span>
+                <span className="tc-name">{c.name}</span>
+                <span className="tc-count">Ideas →</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* PROMO BANNERS */}
       <section className="promos">
@@ -70,76 +127,66 @@ export default function Home() {
               </>
             );
             return p.href ? (
-              <Link key={p.title} href={p.href} className={`promo promo-${p.theme}`} data-reveal="up">{inner}</Link>
+              <Link key={p.title} href={p.href} className={`promo promo-${p.theme}`}>{inner}</Link>
             ) : (
-              <a key={p.title} href={whatsappLink(p.msg!)} target="_blank" rel="noopener noreferrer" className={`promo promo-${p.theme}`} data-reveal="up">{inner}</a>
+              <a key={p.title} href={whatsappLink(p.msg!)} target="_blank" rel="noopener noreferrer" className={`promo promo-${p.theme}`}>{inner}</a>
             );
           })}
         </div>
       </section>
 
-      <GiftUnbox />
-
-      <Marquee />
-
-      <ProductRail title="Hot Wheels & cars" kicker="For young collectors" color={color("hot-wheels")} items={[...productsIn("hot-wheels"), ...productsIn("toys")]} href="/categories/hot-wheels" />
-
-      {/* DEPARTMENTS — horizontal scroll */}
-      <Departments />
-
-      <ProductRail title="Soft toys & teddies" kicker="Something to hug" color={color("soft-toys")} items={productsIn("soft-toys")} href="/categories/soft-toys" />
-
-      {/* PLAY: toy box */}
-      <section className="play">
-        <div className="wrap play-grid">
-          <div className="play-copy">
-            <p className="eyebrow">Play time</p>
-            <h2 className="sec-title" data-split><Split text="Go on —" /> <em><Split text="throw a toy." /></em></h2>
-            <p data-reveal="up">Grab any product in the box and toss it around. Tap one to open its shelf. (Yes, the shop is just as fun in person.)</p>
-            <div className="hero-ctas" data-reveal="up">
-              <Link className="btn btn-green btn-lg" href="/catalogue">Browse all {products.length} products <ArrowRight size={18} /></Link>
-            </div>
-          </div>
-          <ToyBox />
-        </div>
-      </section>
-
-      <ProductRail title="Jewellery & accessories" kicker="Little sparkles" color={color("jewellery")} items={[...productsIn("jewellery"), ...productsIn("wallets")]} href="/categories/jewellery" />
-
-      {/* GIFT FINDER */}
-      <section className="section section-green" id="gift-finder">
+      {/* HANDPICKED */}
+      <section className="hsec">
         <div className="wrap">
-          <div className="gf-intro">
-            <p className="eyebrow eyebrow-gold">Gift Finder</p>
-            <h2 className="sec-title" data-split><Split text="Three questions." /> <em><Split text="The right gift." /></em></h2>
-            <p data-reveal="up">Tell us who it&apos;s for, the occasion and your budget — we&apos;ll show ideas from our shelves and you can send them to us in one tap.</p>
+          <div className="shead shead-center">
+            <h2 className="shead-title">Handpicked for you</h2>
           </div>
-          <GiftFinder compact />
+          <div className="pgrid pgrid-4">
+            {handpicked.map((p) => (
+              <ProductCard key={p.id} product={p} />
+            ))}
+          </div>
+          <div className="h7-more">
+            <Link className="btn btn-outline btn-lg" href="/catalogue">View all {products.length} products <ArrowRight size={18} /></Link>
+          </div>
         </div>
       </section>
 
-      <ProductRail title="Diaries, stationery & more" kicker="School bag & desk" color={color("stationery")} items={[...productsIn("diaries"), ...productsIn("stationery"), ...productsIn("keychains"), ...productsIn("table-mats")]} href="/catalogue" />
-
-      {/* BULK */}
+      {/* WHOLESALE */}
       <section className="bulk6">
         <div className="wrap bulk6-inner">
           <div>
             <p className="bulk6-kicker">For shops, schools &amp; events</p>
-            <h2 className="bulk6-title" data-split><Split text="Gifting by the dozen." /></h2>
-            <p className="bulk6-text" data-reveal="up">Return gifts, school prizes, corporate hampers or stock for your own shop — send your list and quantities, we reply with bulk prices.</p>
+            <h2 className="bulk6-title">Wholesale &amp; return gifts</h2>
+            <p className="bulk6-text">Send your list and quantities on WhatsApp — we reply with bulk prices and dispatch details.</p>
           </div>
-          <div className="bulk6-actions" data-reveal="up">
+          <div className="bulk6-actions">
             <a className="btn btn-gold btn-lg" href={whatsappLink("Hi Cubtix! I'd like bulk pricing. My requirement:")} target="_blank" rel="noopener noreferrer">
-              <WaIcon /> Request bulk pricing
+              <WaIcon /> WhatsApp 92167 53108
             </a>
-            <a className="btn btn-ghost-light btn-lg" href={`tel:${site.phones[0].tel}`}>Call {site.phones[0].display}</a>
+            <a className="btn btn-ghost-light btn-lg" href={`tel:${site.phones[0].tel}`}>Call now</a>
           </div>
         </div>
       </section>
 
       <Promises />
 
-      <section className="section" style={{ paddingTop: 24 }}>
+      {/* ABOUT (accordion) */}
+      <section className="hsec">
+        <div className="wrap about7">
+          <h2 className="shead-title">About Cubtix</h2>
+          <div className="acc">
+            {about.map((x, i) => (
+              <details key={x.q} open={i === 0}>
+                <summary>{x.q}</summary>
+                <p>{x.a}</p>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="hsec" style={{ paddingTop: 12 }}>
         <div className="wrap">
           <VisitBlock />
         </div>

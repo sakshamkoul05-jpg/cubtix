@@ -15,6 +15,7 @@ const nav = [
   { href: "/catalogue", label: "Catalogue" },
   { href: "/categories", label: "Categories" },
   { href: "/about", label: "About Us" },
+  { href: "/write-for-us", label: "Write for Us" },
   { href: "/contact", label: "Contact Us" },
 ];
 
@@ -70,7 +71,7 @@ export default function Header() {
 
           <div className="hactions">
             <a className="hwa" href={whatsappLink("Hi Cubtix!")} target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
-              <WaIcon size={20} /> <span>WhatsApp</span>
+              <WaIcon size={20} /> <span>WhatsApp 92167 53108</span>
             </a>
             <ListButton />
           </div>

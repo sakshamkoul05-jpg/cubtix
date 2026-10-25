@@ -8,8 +8,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { EnquiryProvider, FloatingList } from "@/components/Enquiry";
 import { site } from "@/lib/site";
-import Preloader from "@/components/motion/Preloader";
-import { Cursor, Reveal, SmoothScroll } from "@/components/motion/Motion";
+import { Reveal, SmoothScroll } from "@/components/motion/Motion";
+import FloatingWhatsApp from "@/components/FloatingWhatsApp";
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -38,22 +38,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `document.documentElement.classList.add('js');try{if(sessionStorage.getItem('cbx-seen'))document.documentElement.classList.add('seen')}catch(e){}`,
+            __html: `document.documentElement.classList.add('js','loaded')`,
           }}
         />
       </head>
       <body>
-        <Preloader />
         <SmoothScroll />
-        <Cursor />
         <Reveal />
-        <div className="grain" aria-hidden="true" />
         <EnquiryProvider>
           <a className="skip" href="#main">Skip to content</a>
           <Header />
           <main id="main">{children}</main>
           <Footer />
           <FloatingList />
+          <FloatingWhatsApp />
         </EnquiryProvider>
       </body>
     </html>

@@ -40,6 +40,7 @@ export default function Footer() {
             <li><Link href="/catalogue">Catalogue</Link></li>
             <li><Link href="/gift-finder">Gift Finder</Link></li>
             <li><Link href="/about">About</Link></li>
+            <li><Link href="/write-for-us">Write for Us</Link></li>
             <li><Link href="/contact">Contact</Link></li>
           </ul>
         </div>
